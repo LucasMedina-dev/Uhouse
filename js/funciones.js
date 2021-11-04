@@ -32,11 +32,11 @@ function agregarViviendas(ingreso){
                 <button class="propiedades_toggle"><p class="propiedades_titulo">${ingreso[i].condicion} - ${ingreso[i].ciudad}</p></button>
                 <div class="propiedades_informacion">
                     <li class="propiedades_lista">U$S ${ingreso[i].precio}</li>
-                    <li class="propiedades_lista">Ciudad: ${ingreso[i].ciudad}</li>
-                    <li class="propiedades_lista">tipo: ${ingreso[i].tipo}</li>
-                    <li class="propiedades_lista">ambientes: ${ingreso[i].ambientes}</li>
-                    <li class="propiedades_lista">pisos: ${ingreso[i].pisos}</li>
-                    <li class="propiedades_lista">baños: ${ingreso[i].baños}</li>
+                    <li class="propiedades_lista">${ingreso[i].ciudad}</li>
+                    <li class="propiedades_lista">Tipo: ${ingreso[i].tipo}</li>
+                    <li class="propiedades_lista">Ambientes: ${ingreso[i].ambientes}</li>
+                    <li class="propiedades_lista">Pisos: ${ingreso[i].pisos}</li>
+                    <li class="propiedades_lista">Baños: ${ingreso[i].baños}</li>
                 </div>  
             </ul>`;
         propiedades.appendChild(viviendas)
@@ -45,30 +45,9 @@ function agregarViviendas(ingreso){
 function guardarLS(clave, valor){
     localStorage.setItem(clave, valor)
 }
-function tomarLS(clave){
-    localStorage.getItem(clave)
-}
 function borrarItem ( array, item ) { // Con esta funcion elijo que borrar de que array
     var i = array.indexOf( item );
     array.splice( i, 1 );
-}
-function borrar(ingreso){
-    while (ingreso.length!=0){
-        propiedades.removeChild(ingreso[0])
-    }
-}
-function estado(label, estado){
-    switch (estado) {
-        case "activado":
-            label.classList.add("filtros_boton-activado")
-            label.classList.remove("filtros_boton-desactivado")
-            break;
-        case "desactivado":
-            label.classList.remove("filtros_boton-activado")
-            label.classList.add("filtros_boton-desactivado")
-            break;
-    }
-
 }
 function comprobarResultado(){ 
     if (propiedades.innerHTML==""){
