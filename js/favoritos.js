@@ -35,13 +35,6 @@ fetch("../js/db.json")
                 $(this).removeClass("propiedades_favorito-true")
                 $(this).addClass("propiedades_favorito-false")
             }
-        })
-        $(".propiedades_toggle").click(function(){ // Efecto al hacer click en informacion de la vivienda
-            $(this).fadeOut(500)
-            $(this).parent().children(".propiedades_informacion").delay(500)
-                                                                .fadeIn(1000)
-        })
-        $(".propiedades_favorito").click(function(){
             let id= $(this).attr("id")
             let n=id.match(/\d+/)[0]//Esto lee los numeros del id
 
@@ -52,11 +45,14 @@ fetch("../js/db.json")
             }
             guardarLS("idFav", JSON.stringify(idFav)) //Finalmente se guarda el LS el array modificado
         })
+        $(".propiedades_toggle").click(function(){ // Efecto al hacer click en informacion de la vivienda
+            $(this).fadeOut(500)
+            $(this).parent().children(".propiedades_informacion").delay(500)
+                                                                .fadeIn(1000)
+        })
         $(".propiedades_favorito").each(function(){//Mantiene seleccionado los favoritos
             let id= $(this).attr("id")
             let n=id.match(/\d+/)[0]
-            console.log(id)
-            console.log(n)
             if(idFav.find(x=> x===n)){
                 $(this).removeClass("propiedades_favorito-false")
                 $(this).addClass("propiedades_favorito-true")

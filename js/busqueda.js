@@ -122,13 +122,6 @@ fetch("../js/db.json")
                 $(this).removeClass("propiedades_favorito-true")
                 $(this).addClass("propiedades_favorito-false")
             }
-        })
-        $(".propiedades_toggle").click(function(){ 
-            $(this).fadeOut(500)
-            $(this).parent().children(".propiedades_informacion").delay(500)
-                                                                .fadeIn(1000)
-        })
-        $(".propiedades_favorito").click(function(){
             let id= $(this).attr("id")
             let fl=id.charAt(0)     //Esto lee la primer letra del id (fl= first letter)
             let n=id.match(/\d+/)[0]//Esto lee los numeros del id
@@ -138,6 +131,11 @@ fetch("../js/db.json")
                 idFav.push(n)
             }
             guardarLS("idFav", JSON.stringify(idFav))
+        })
+        $(".propiedades_toggle").click(function(){ 
+            $(this).fadeOut(500)
+            $(this).parent().children(".propiedades_informacion").delay(500)
+                                                                .fadeIn(1000)
         })
         $(".propiedades_favorito").each(function(){//Mantiene seleccionado los favoritos
             let id= $(this).attr("id")
