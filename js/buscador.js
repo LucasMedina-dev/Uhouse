@@ -19,12 +19,10 @@ enviarBusqueda.onclick = (e) =>{
         busquedaCiudad.classList.add("advertir")
     }else{
         filtros.push(new buscadores(busquedaCiudad.value, busquedaMinimo.value, busquedaMaximo.value))
-        
         guardarLS("filtros", JSON.stringify(filtros))
         ejecutarBusqueda()
     }
 }
-
 //Esta funcion refiere a los filtros por Casa, departamento y ph del buscador
 /*Al hacer click en alguna de las 3 opciones, la funcion toma el atributo del boton clickeado 
 y lo guarda en localStorage con la clave "tipos"*/

@@ -2,11 +2,9 @@ $(".header_boton").click(function(){
     $(".header_menu-size").toggle(200)
 })
 let propiedades= document.getElementsByClassName("propiedades")[0]
-
-
 let favoritos=[]// Acá se van a guardar las viviendas que coincidan en id con las id del localStorage
-let idFav=JSON.parse(localStorage.getItem("idFav")) // Se toma el array de LS para trabajar sobre ella sin sobreescribir
-if (idFav == null){
+let idFav=JSON.parse(localStorage.getItem("idFav")) // Se toma el array de LS, se escribe sobre el mismo y se vuelve a guardar en LS
+if (idFav == null){//Si no hay favoritos agregados, se genera un array vacio para poder trabajar
     idFav=[]
 }
 fetch("../js/db.json")
@@ -20,7 +18,6 @@ fetch("../js/db.json")
         if (favoritos.length===0){
             comprobarResultado()
         }
-        
     }) 
     .then(()=>{ 
         $('.propiedades_favorito').click(function(){ //Efecto al apretar boton de favorito
@@ -59,7 +56,6 @@ fetch("../js/db.json")
             }else{
                         $(this).removeClass("propiedades_favorito-true")
                 $(this).addClass("propiedades_favorito-false")
-
             }
         })
     })
@@ -79,11 +75,6 @@ con el uso de forEach. Luego de hacer la comparacion, se agregan las viviendas m
 
 Se tuvo en cuenta como primer paso guardar en un array los valores del LS y escribir sobre ese array para mantener los datos sin 
 que se sobreescriban
-
-
-
-
-
 */
 
 

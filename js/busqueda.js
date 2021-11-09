@@ -28,7 +28,6 @@ if (monedaLS==="peso"){
     precioMinimo= precioMinimo / dolarOficial
     precioMaximo=precioMaximo / dolarOficial
 }
-
 // Condiciones en caso de dejar la busqueda por precio en blanco
 if (isNaN(precioMinimo)){
     precioMinimo=0
@@ -37,24 +36,18 @@ if (isNaN(precioMaximo)) {
     precioMaximo=9999999
 }
 //---------------------------------------------------------------
-
 function ejecutarBusqueda() {
     window.open("busquedas.html", "_self");
 }
 let resultado = document.getElementById("resultado") // llamado a elemento creado para ejecutar funcion comprobarBusqueda() que se ejecuta si no hay resultados
 let propiedades= document.getElementsByClassName("propiedades")[0]
-
 // Aca se guardan los favoritos y los tipos de vivienda que se buscan
 let idFav=JSON.parse(localStorage.getItem("idFav"))
 if (idFav == null){
     idFav=[]
 }
-
 //-------------------------------------------------------------------
-
 let domicilios=[] // variable declarada para recibir todas las casas departamentos y ph
-
-
 // ORDEN DE LOS ITEMS- ORDEN DE LOS ITEMS- ORDEN DE LOS ITEMS
 let orden
 $("#orden").change(()=>{
@@ -63,8 +56,6 @@ $("#orden").change(()=>{
     ejecutarBusqueda()
 })
 //------------------------------------------------------------
-
-
 let indiceInicial
 let indiceFinal
 fetch("../js/db.json")
@@ -79,8 +70,6 @@ fetch("../js/db.json")
         indiceInicial=parseInt(localStorage.getItem("indiceInicial"))
         indiceFinal=Math.ceil(parseInt(localStorage.getItem("indiceLength"))/10)//Se usa math.ceil() para aproximar el valor a un número mayor entero
         $("#index").text(`${indiceInicial} de ${indiceFinal}`)
-
-
         // Ordenado por precio y ambientes
         switch (localStorage.getItem("orden")){
             case "precioMenor":
@@ -123,7 +112,6 @@ fetch("../js/db.json")
                 $(this).addClass("propiedades_favorito-false")
             }
             let id= $(this).attr("id")
-            let fl=id.charAt(0)     //Esto lee la primer letra del id (fl= first letter)
             let n=id.match(/\d+/)[0]//Esto lee los numeros del id
             if (idFav.find(x => x == n)){
                 borrarItem(idFav, n)
@@ -158,12 +146,9 @@ fetch("../js/db.json")
             $("#previo").hide()
         }
     })
-
-
 $(".header_boton").click(function(){
     $(".header_menu-size").toggle(200)
 })
-
 $(".true_label").each(function(){//Mantiene seleccionado los filtros por casa departamento y ph
     let label=$(this).attr("for")
     if(tipos.find(x=> x===label)){
@@ -175,7 +160,6 @@ $(".true_label").each(function(){//Mantiene seleccionado los filtros por casa de
 
     }
 })
-
 // Botones para navegar entre paginas de las busquedas
 /*Los índices ejemplo "1 de 2" y "2 de 2" cumplen ciertos requisitos
 El índice inicial no debe ser mayor que 2, por lo tanto al hacer click
