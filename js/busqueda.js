@@ -146,6 +146,9 @@ fetch("../js/db.json")
         if(indiceInicial===1){
             $("#previo").hide()
         }
+        if (indiceFinal===0){
+            $(".control").hide()
+        }
     })
 $(".header_boton").click(function(){
     $(".header_menu-size").toggle(200)
