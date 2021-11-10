@@ -140,14 +140,14 @@ fetch("../js/db.json")
         })
     })
     .then(()=>{
-        if (indiceFinal!=0){
-            $("#siguiente").show()
+        if (indiceFinal===1){
+            $("#siguiente").hide()
         }
         if(indiceInicial===1){
             $("#previo").hide()
         }
-        if (indiceFinal===0){
-            $(".control").hide()
+        if (indiceFinal!=0){
+            $(".control").show()
         }
     })
 $(".header_boton").click(function(){
