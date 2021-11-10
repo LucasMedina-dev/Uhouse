@@ -31,5 +31,5 @@ $(".header_boton").click(function(){
 $("#boton").click(()=>{
     $(".false").toggle(300)
 })
-tipos=["casa", "departamento", "ph"]
+tipos=["casa", "departamento", "ph"]// Al ir a la pagina principal, se resetea la busqueda por tipos
 guardarLS("tipos", JSON.stringify(tipos))

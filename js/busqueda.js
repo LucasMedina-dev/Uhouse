@@ -58,6 +58,7 @@ $("#orden").change(()=>{
 //------------------------------------------------------------
 let indiceInicial
 let indiceFinal
+obtenerTipos()//Obtengo los tipos de viviendas guardadas en LS
 fetch("../js/db.json")
     .then((response) => response.json())
     .then(
@@ -150,6 +151,7 @@ $(".header_boton").click(function(){
     $(".header_menu-size").toggle(200)
 })
 $(".true_label").each(function(){//Mantiene seleccionado los filtros por casa departamento y ph
+    tipos= JSON.parse(localStorage.getItem("tipos"))
     let label=$(this).attr("for")
     if(tipos.find(x=> x===label)){
         $(this).removeClass("desactivado")
