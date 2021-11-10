@@ -140,8 +140,8 @@ fetch("../js/db.json")
         })
     })
     .then(()=>{
-        if (indiceFinal===1){
-            $("#siguiente").hide()
+        if (indiceFinal!=0){
+            $("#siguiente").show()
         }
         if(indiceInicial===1){
             $("#previo").hide()
