@@ -61,8 +61,8 @@ let indiceFinal
 obtenerTipos()//Obtengo los tipos de viviendas guardadas en LS
 fetch("../js/db.json")
     .then((response) => {
-        console.log(response)
         response.json()
+        console.log(response)
     })
     .then(
     (data) => {
