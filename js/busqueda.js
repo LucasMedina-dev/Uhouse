@@ -60,99 +60,96 @@ let indiceInicial
 let indiceFinal
 obtenerTipos()//Obtengo los tipos de viviendas guardadas en LS
 fetch("../js/db.json")
-    .then((response) => {
-        response.json()
-        console.log(response)
-    })
-    .then(
-    (data) => {
-        tipos.forEach(y=> domicilios= domicilios.concat(data.filter(x => x.tipo===y)))
-        // "tipos" son los tipos de propiedades(casa,dpto,ph), se filtran las propiedades que coincidan con la busqueda
-        let final= domicilios.filter(x => x.ciudad.toLowerCase()===ciudad && x.precio>=precioMinimo && x.precio<=precioMaximo)
-        // "final" toma los datos filtrados del array anterior y se toman las que coincidan con el precio y ciudad
-        guardarLS("indiceLength", final.length)
-        indiceInicial=parseInt(localStorage.getItem("indiceInicial"))
-        indiceFinal=Math.ceil(parseInt(localStorage.getItem("indiceLength"))/10)//Se usa math.ceil() para aproximar el valor a un número mayor entero
-        $("#index").text(`${indiceInicial} de ${indiceFinal}`)
-        // Ordenado por precio y ambientes
-        switch (localStorage.getItem("orden")){
-            case "precioMenor":
-                final.sort(function(a, b){
-                    return a.precio - b.precio
-                });
-            break;
-            case "precioMayor":
-                final.sort(function(a, b){
-                    return b.precio - a.precio
-                });
-            break;
-            case "ambientesMenor":
-                final.sort(function(a, b){
-                    return a.ambientes - b.ambientes
-                });
-            break;
-            case "ambientesMayor":
-                final.sort(function(a, b){
-                    return b.ambientes - a.ambientes
-                });
-            break;
+.then((response) =>response.json())
+.then((data) => {      
+    console.log(data)
+    tipos.forEach(y=> domicilios= domicilios.concat(data.filter(x => x.tipo===y)))
+    // "tipos" son los tipos de propiedades(casa,dpto,ph), se filtran las propiedades que coincidan con la busqueda
+    let final= domicilios.filter(x => x.ciudad.toLowerCase()===ciudad && x.precio>=precioMinimo && x.precio<=precioMaximo)
+    // "final" toma los datos filtrados del array anterior y se toman las que coincidan con el precio y ciudad
+    guardarLS("indiceLength", final.length)
+    indiceInicial=parseInt(localStorage.getItem("indiceInicial"))
+    indiceFinal=Math.ceil(parseInt(localStorage.getItem("indiceLength"))/10)//Se usa math.ceil() para aproximar el valor a un número mayor entero
+    $("#index").text(`${indiceInicial} de ${indiceFinal}`)
+    // Ordenado por precio y ambientes
+    switch (localStorage.getItem("orden")){
+        case "precioMenor":
+            final.sort(function(a, b){
+                return a.precio - b.precio
+            });
+        break;
+        case "precioMayor":
+            final.sort(function(a, b){
+                return b.precio - a.precio
+            });
+        break;
+        case "ambientesMenor":
+            final.sort(function(a, b){
+                return a.ambientes - b.ambientes
+            });
+        break;
+        case "ambientesMayor":
+            final.sort(function(a, b){
+                return b.ambientes - a.ambientes
+            });
+        break;
+    }
+    //Se agregan las viviendas filtradas, si no hay viviendas que coincidan con la busqueda
+    // comprobarResultado() lo va a notificar
+    agregarViviendas(final.slice(10*(indiceInicial-1), indiceInicial*10))
+    comprobarResultado() 
+}) 
+.then(()=>{
+    $('.propiedades_favorito').click(function(){
+        if ($(this).hasClass("propiedades_favorito-false")){
+            $(this).removeClass("propiedades_favorito-false")
+            $(this).addClass("propiedades_favorito-true")
+            $(this).children("i").animate({fontSize:"1.5rem"}, 100)
+                                .animate({fontSize:"1rem"}, 100)
+        }else{
+            $(this).children("i").animate({fontSize:"1.5rem"}, 100)
+                                .animate({fontSize:"1rem"}, 100)
+            $(this).removeClass("propiedades_favorito-true")
+            $(this).addClass("propiedades_favorito-false")
         }
-        //Se agregan las viviendas filtradas, si no hay viviendas que coincidan con la busqueda
-        // comprobarResultado() lo va a notificar
-        agregarViviendas(final.slice(10*(indiceInicial-1), indiceInicial*10))
-        comprobarResultado() 
-    }) 
-    .then(()=>{
-        $('.propiedades_favorito').click(function(){
-            if ($(this).hasClass("propiedades_favorito-false")){
-                $(this).removeClass("propiedades_favorito-false")
-                $(this).addClass("propiedades_favorito-true")
-                $(this).children("i").animate({fontSize:"1.5rem"}, 100)
-                                    .animate({fontSize:"1rem"}, 100)
-            }else{
-                $(this).children("i").animate({fontSize:"1.5rem"}, 100)
-                                    .animate({fontSize:"1rem"}, 100)
-                $(this).removeClass("propiedades_favorito-true")
-                $(this).addClass("propiedades_favorito-false")
-            }
-            let id= $(this).attr("id")
-            let n=id.match(/\d+/)[0]//Esto lee los numeros del id
-            if (idFav.find(x => x == n)){
-                borrarItem(idFav, n)
-            }else{
-                idFav.push(n)
-            }
-            guardarLS("idFav", JSON.stringify(idFav))
-        })
-        $(".propiedades_toggle").click(function(){ 
-            $(this).fadeOut(500)
-            $(this).parent().children(".propiedades_informacion").delay(500)
-                                                                .fadeIn(1000)
-        })
-        $(".propiedades_favorito").each(function(){//Mantiene seleccionado los favoritos
-            let id= $(this).attr("id")
-            let n=id.match(/\d+/)[0]
-            if(idFav.find(x=> x===n)){
-                $(this).removeClass("propiedades_favorito-false")
-                $(this).addClass("propiedades_favorito-true")
-            }else{
-                $(this).removeClass("propiedades_favorito-true")
-                $(this).addClass("propiedades_favorito-false")
+        let id= $(this).attr("id")
+        let n=id.match(/\d+/)[0]//Esto lee los numeros del id
+        if (idFav.find(x => x == n)){
+            borrarItem(idFav, n)
+        }else{
+            idFav.push(n)
+        }
+        guardarLS("idFav", JSON.stringify(idFav))
+    })
+    $(".propiedades_toggle").click(function(){ 
+        $(this).fadeOut(500)
+        $(this).parent().children(".propiedades_informacion").delay(500)
+                                                            .fadeIn(1000)
+    })
+    $(".propiedades_favorito").each(function(){//Mantiene seleccionado los favoritos
+        let id= $(this).attr("id")
+        let n=id.match(/\d+/)[0]
+        if(idFav.find(x=> x===n)){
+            $(this).removeClass("propiedades_favorito-false")
+            $(this).addClass("propiedades_favorito-true")
+        }else{
+            $(this).removeClass("propiedades_favorito-true")
+            $(this).addClass("propiedades_favorito-false")
 
-            }
-        })
-    })
-    .then(()=>{
-        if (indiceFinal===1){
-            $("#siguiente").hide()
-        }
-        if(indiceInicial===1){
-            $("#previo").hide()
-        }
-        if (indiceFinal!=0){
-            $(".control").show()
         }
     })
+})
+.then(()=>{
+    if (indiceFinal===1){
+        $("#siguiente").hide()
+    }
+    if(indiceInicial===1){
+        $("#previo").hide()
+    }
+    if (indiceFinal!=0){
+        $(".control").show()
+    }
+})
 $(".header_boton").click(function(){
     $(".header_menu-size").toggle(200)
 })
